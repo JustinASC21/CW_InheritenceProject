@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
-public class VolumeGroup {
+public class VolumeGroup extends Volumes {
     private ArrayList<PhysicalVolume> phList;
     private ArrayList<LogicalVolume> lvList;
 
-    public VolumeGroup(String name, ) {
+    public VolumeGroup(String name, String uuid, PhysicalVolume pv ) {
+        super(name,uuid);
         phList = new ArrayList<PhysicalVolume>();
         lvList = new ArrayList<LogicalVolume>();
     }

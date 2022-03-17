@@ -21,6 +21,10 @@ public class HardDrive {
         return size;
     }
 
+    public boolean isOccupied() {
+        return occupied;
+    }
+
     public String getName() {
         return name;
     }

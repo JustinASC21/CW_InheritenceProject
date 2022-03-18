@@ -4,7 +4,7 @@ public class Volumes {
 //    private String size;
 //    No size needed >?
 
-    public Volumes(String UUID, String name) {
+    public Volumes(String name, String UUID) {
         this.UUID = UUID;
         this.name = name;
 //        this.size = size;

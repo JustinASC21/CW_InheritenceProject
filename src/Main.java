@@ -5,7 +5,7 @@ public class Main {
         while (true) {
             System.out.print("cmd$: ");
             String input = sc.nextLine();
-            ParseCommands.test();
+            ParseCommands.parseMessage(input);
         }
     }
 }

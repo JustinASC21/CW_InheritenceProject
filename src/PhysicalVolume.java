@@ -3,16 +3,19 @@ public class PhysicalVolume {
     private String UUID;
     private String name;
     private boolean occupied;
+    private VolumeGroup bigVolume;
 
     public PhysicalVolume(String name, String UUID, HardDrive hd) {
         this.hd = hd;
         this.UUID = UUID;
         this.name = name;
         occupied = false;
+        bigVolume = null;
     }
 
-    public void setOccupied() {
+    public void setOccupied(VolumeGroup vg) {
         this.occupied = true;
+        this.bigVolume = vg;
     }
 
     public String getName() {
@@ -29,5 +32,9 @@ public class PhysicalVolume {
 
     public boolean isOccupied() {
         return occupied;
+    }
+
+    public VolumeGroup getBigVolume() {
+        return bigVolume;
     }
 }

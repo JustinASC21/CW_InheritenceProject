@@ -10,6 +10,12 @@ public class VolumeGroup extends Volumes {
         lvList = new ArrayList<LogicalVolume>();
     }
 
+    public void addPVList(PhysicalVolume pv) {
+        phList.add(pv);
+    }
+    public void addLVList(LogicalVolume lv) {
+        lvList.add(lv);
+    }
     public String returnTotalSize() {
         int total = 0;
         for (int i = 0; i < phList.size(); i ++){
@@ -17,4 +23,5 @@ public class VolumeGroup extends Volumes {
         }
         return total + "G";
     }
+
 }

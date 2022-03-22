@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 public class LocalHDStorage {
     public static ArrayList<HardDrive> localHD = new ArrayList<HardDrive>();
-    public static ArrayList<PhysicalVolume> localPhysicalVolumes = new ArrayList<PhysicalVolume>();
-    public static ArrayList<VolumeGroup> localVolumeGroups = new ArrayList<VolumeGroup>();
+    public static ArrayList<Volumes> externalVolumes = new ArrayList<Volumes>();
 
     public static void addDrive(HardDrive hd) {
         localHD.add(hd);
@@ -16,11 +15,11 @@ public class LocalHDStorage {
         }
         return null;
     }
-    public static PhysicalVolume hasPV(String name) {
+    public static Volumes hasObject(String name) {
         // if true, that means HD exists in local storage, if false then it doesnt exist or is being used
-        for (int i = 0; i < localPhysicalVolumes.size(); i++) {
-            if (localPhysicalVolumes.get(i).getName().equals(name)) {
-                return localPhysicalVolumes.get(i);
+        for (int i = 0; i < externalVolumes.size(); i++) {
+            if (externalVolumes.get(i).getName().equals(name)) {
+                return externalVolumes.get(i);
             }
         }
         return null;
@@ -31,24 +30,28 @@ public class LocalHDStorage {
         }
     }
     public static void addPhysicalVolumes(PhysicalVolume ph) {
-        localPhysicalVolumes.add(ph);
+        externalVolumes.add(ph);
     }
-    public static void displayPhysicalVol() {
-        for (int i = 0; i < localPhysicalVolumes.size(); i++) {
-            PhysicalVolume ph = localPhysicalVolumes.get(i);
-            boolean isOccupied = ph.isOccupied();
-            if (isOccupied) {
-                System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getBigVolume().getName() + "] [" + ph.getUUID() + "]");
+    public static void displayVolumes() {
+        for (int i = 0; i < externalVolumes.size(); i++) {
+            Volumes obj = externalVolumes.get(i);
+            if (obj instanceof PhysicalVolume) {
+                PhysicalVolume ph = (PhysicalVolume) obj;
+                boolean isOccupied = ph.isOccupied();
+                if (isOccupied) {
+                    System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getBigVolume().getName() + "] [" + ph.getUUID() + "]");
+                }
+                else {
+                    System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getUUID() + "]");
+                }
             }
-            else {
-                System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getUUID() + "]");
-            }
+
         }
     }
 
-    public static void addVolumeGroup(VolumeGroup vg) {
-        localVolumeGroups.add(vg);
-    }
+//    public static void addVolumeGroup(VolumeGroup vg) {
+//        localVolumeGroups.add(vg);
+//    }
 //    public static void displayVolumeGroups() {
 //        for (int i = 0; i < localVolumeGroups.size(); i++) {
 //            VolumeGroup vol = localPhysicalVolumes.get(i);

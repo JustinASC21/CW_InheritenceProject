@@ -21,7 +21,7 @@ public class ParseCommands {
             System.out.println("Is this drive occupied? : " + LocalHDStorage.hasHD("another").isOccupied());
             PhysicalVolume newPV = new PhysicalVolume("pvName", UUIDGenerator.generator(), LocalHDStorage.hasHD("another"));
             LocalHDStorage.addPhysicalVolumes(newPV);
-            LocalHDStorage.displayPhysicalVol();
+            LocalHDStorage.displayVolumes();
         }
     }
     public static void parseMessage(String msg) {
@@ -57,25 +57,30 @@ public class ParseCommands {
             }
         }
         if (msg.contains("pvlist")) {
-            LocalHDStorage.displayPhysicalVol();
+            LocalHDStorage.displayVolumes();
         }
         if (msg.contains("vgcreate")) {
             String vgName = msg.split(" ")[1];
             String pvName = msg.split(" ")[2];
+            if (LocalHDStorage.hasObject(pvName) instanceof PhysicalVolume) {
+                PhysicalVolume foundPV = (PhysicalVolume) LocalHDStorage.hasObject(pvName);
+                if (foundPV.isOccupied()) {
+                    // drive is not present in local storage
+                    System.out.println("Error! Physical Volume does not exist or is occupied");
+                }
+                else {
+                    // vg free to be used for pv'
+                    VolumeGroup vg = new VolumeGroup(vgName,UUIDGenerator.generator(),foundPV);
+                    foundPV.setOccupied(vg);
+                    LocalHDStorage.displayVolumes();
+                    // create physical volume below
+                    System.out.println("Successfully created Volume Group [" + vg.getName() + "]");
+                }
+            }
 
-            if (LocalHDStorage.hasPV(pvName) == null || LocalHDStorage.hasPV(pvName).isOccupied()) {
-                // drive is not present in local storage
-                System.out.println("Error! Physical Volume does not exist or is occupied");
-            }
-            else {
-            // vg free to be used for pv'
-                VolumeGroup vg = new VolumeGroup(vgName,UUIDGenerator.generator(),LocalHDStorage.hasPV(pvName));
-                LocalHDStorage.hasPV(pvName).setOccupied(vg);
-                // create physical volume below
-                System.out.println("Successfully created Volume Group [" + vg.getName() + "]");
-            }
+
         }
-        if (msg.contains("vgextend")) {
+        /*if (msg.contains("vgextend")) {
             String vgName = msg.split(" ")[1];
             String pvName = msg.split(" ")[2];
 
@@ -96,7 +101,7 @@ public class ParseCommands {
             String lvName = msg.split(" ")[1];
             String lvSize = msg.split(" ")[2];
             String vgName = msg.split(" ")[3];
-        }
+        }*/
     }
 
 }

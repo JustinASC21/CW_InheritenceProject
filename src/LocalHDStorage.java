@@ -29,22 +29,35 @@ public class LocalHDStorage {
             System.out.println(localHD.get(i));
         }
     }
-    public static void addPhysicalVolumes(PhysicalVolume ph) {
-        externalVolumes.add(ph);
+    public static void addVolumes (Volumes volume) {
+        externalVolumes.add(volume);
     }
-    public static void displayVolumes() {
+    public static void displayVolumes(int volumeType) {
+        // volumeType is either 1, 2 ,3  1 for physical volumes, 2 for volume groups, and 3 for logical groups
         for (int i = 0; i < externalVolumes.size(); i++) {
             Volumes obj = externalVolumes.get(i);
-            if (obj instanceof PhysicalVolume) {
-                PhysicalVolume ph = (PhysicalVolume) obj;
-                boolean isOccupied = ph.isOccupied();
-                if (isOccupied) {
-                    System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getBigVolume().getName() + "] [" + ph.getUUID() + "]");
-                }
-                else {
-                    System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getUUID() + "]");
-                }
+            switch (volumeType) {
+                case 1:
+                    if (obj instanceof PhysicalVolume) {
+                        PhysicalVolume ph = (PhysicalVolume) obj;
+                        boolean isOccupied = ph.isOccupied();
+                        if (isOccupied) {
+                            System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getBigVolume().getName() + "] [" + ph.getUUID() + "]");
+                        }
+                        else {
+                            System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getUUID() + "]");
+                        }
+                    }
+                    break;
+                case 2:
+                    if (obj instanceof VolumeGroup) {
+                        VolumeGroup vg = (VolumeGroup) obj;
+                        System.out.println(vg.getName() + ": total: [" + vg.getTotalSpace() + "G] available: [" + vg.getAvailableSpace() + "G] " + vg.PVListAsString() + " [" +vg.getUUID() + "]");
+                    }
+                    break;
+                case 3:
             }
+
 
         }
     }

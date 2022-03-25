@@ -19,9 +19,9 @@ public class ParseCommands {
             System.out.println("Is this drive occupied? : " + LocalHDStorage.hasHD("another").isOccupied());
             LocalHDStorage.hasHD("another").setOccupied();
             System.out.println("Is this drive occupied? : " + LocalHDStorage.hasHD("another").isOccupied());
-            PhysicalVolume newPV = new PhysicalVolume("pvName", UUIDGenerator.generator(), LocalHDStorage.hasHD("another"));
-            LocalHDStorage.addPhysicalVolumes(newPV);
-            LocalHDStorage.displayVolumes();
+            PhysicalVolume newPV = new PhysicalVolume("pvName", UUIDGenerator.generator(), LocalHDStorage.hasHD("another"),LocalHDStorage.hasHD("another").getSizeAsInt());
+            LocalHDStorage.addVolumes((Volumes) newPV);
+            LocalHDStorage.displayVolumes(1);
         }
     }
     public static void parseMessage(String msg) {
@@ -49,15 +49,24 @@ public class ParseCommands {
                 System.out.println("Error! Disk does not exist or is occupied");
             }
             else {
-//              drive is not occupied so set it to occupied now;
-                LocalHDStorage.hasHD(driveName).setOccupied();
-                // create physical volume below
-                PhysicalVolume newPV = new PhysicalVolume(pvName, UUIDGenerator.generator(), LocalHDStorage.hasHD(driveName));
-                LocalHDStorage.addPhysicalVolumes(newPV);
+                // check that physical drive has not been created before
+                if (LocalHDStorage.hasObject(pvName) instanceof PhysicalVolume) {
+                    System.out.println("Error! Physical Volume has already been created!");
+                }
+                else {
+                    //   drive is not occupied so set it to occupied now;
+                    HardDrive hd = LocalHDStorage.hasHD(driveName);
+                    hd.setOccupied();
+                    // create physical volume below
+                    PhysicalVolume newPV = new PhysicalVolume(pvName, UUIDGenerator.generator(), hd,hd.getSizeAsInt());
+                    LocalHDStorage.addVolumes((Volumes) newPV);
+                    System.out.println("Physical Volume has been created!");
+                }
+
             }
         }
         if (msg.contains("pvlist")) {
-            LocalHDStorage.displayVolumes();
+            LocalHDStorage.displayVolumes(1);
         }
         if (msg.contains("vgcreate")) {
             String vgName = msg.split(" ")[1];
@@ -70,38 +79,49 @@ public class ParseCommands {
                 }
                 else {
                     // vg free to be used for pv'
-                    VolumeGroup vg = new VolumeGroup(vgName,UUIDGenerator.generator(),foundPV);
+                    // create volume group below
+                    VolumeGroup vg = new VolumeGroup(vgName,UUIDGenerator.generator(),foundPV, foundPV.getSize());
                     foundPV.setOccupied(vg);
-                    LocalHDStorage.displayVolumes();
-                    // create physical volume below
+                    // add the vg to
+                    LocalHDStorage.addVolumes(vg);
                     System.out.println("Successfully created Volume Group [" + vg.getName() + "]");
                 }
             }
+            else
+                System.out.println("Physical Volume does not exist!");
 
 
         }
-        /*if (msg.contains("vgextend")) {
+        if (msg.contains("vgextend")) {
             String vgName = msg.split(" ")[1];
             String pvName = msg.split(" ")[2];
-
-            if (LocalHDStorage.hasPV(pvName) == null || LocalHDStorage.hasPV(pvName).isOccupied()) {
-                // drive is not present in local storage
-                System.out.println("Error! Physical Volume does not exist or is occupied");
-            }
-//            else if () volume group does not exist
-            else {
-                // vg free to be used for pv'
-                VolumeGroup vg = new VolumeGroup(vgName,UUIDGenerator.generator(),LocalHDStorage.hasPV(pvName));
-                LocalHDStorage.hasPV(pvName).setOccupied(vg);
-                // create physical volume below
-                System.out.println("Successfully created Volume Group [" + vg.getName() + "]");
+            if (LocalHDStorage.hasObject(pvName) instanceof PhysicalVolume) {
+                PhysicalVolume foundPV = (PhysicalVolume) LocalHDStorage.hasObject(pvName);
+                if (foundPV.isOccupied()) {
+                    // drive is not present in local storage
+                    System.out.println("Error! Physical Volume does not exist or is occupied");
+                } else {
+                    // vg free to be extended
+                    // add physical volume group if volume group exists
+                    if (LocalHDStorage.hasObject(vgName) instanceof VolumeGroup) {
+                        // add physical drive to volume group
+                        VolumeGroup vg = (VolumeGroup) LocalHDStorage.hasObject(vgName);
+                        vg.addPVList(foundPV);
+                        foundPV.setOccupied(vg); // set the physical volume as occupied under volume group
+                        System.out.println("Successfully extended the volume group!");
+                    }
+                }
             }
         }
-        if (msg.contains("lvcreate")) {
+        /*if (msg.contains("lvcreate")) {
             String lvName = msg.split(" ")[1];
             String lvSize = msg.split(" ")[2];
             String vgName = msg.split(" ")[3];
         }*/
+        if (msg.contains("vglist")) {
+            LocalHDStorage.displayVolumes(2);
+        }
+
     }
 
 }

@@ -3,8 +3,8 @@ public class PhysicalVolume extends Volumes {
     private boolean occupied;
     private VolumeGroup bigVolume;
 
-    public PhysicalVolume(String name, String UUID, HardDrive hd) {
-        super(name,UUID);
+    public PhysicalVolume(String name, String UUID, HardDrive hd, int hdSize) {
+        super(name,UUID,hdSize);
         this.hd = hd;
         occupied = false;
         bigVolume = null;

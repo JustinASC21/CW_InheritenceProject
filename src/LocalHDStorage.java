@@ -40,13 +40,7 @@ public class LocalHDStorage {
                 case 1:
                     if (obj instanceof PhysicalVolume) {
                         PhysicalVolume ph = (PhysicalVolume) obj;
-                        boolean isOccupied = ph.isOccupied();
-                        if (isOccupied) {
-                            System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getBigVolume().getName() + "] [" + ph.getUUID() + "]");
-                        }
-                        else {
-                            System.out.println(ph.getName() + ": [" + ph.getHd().getSize() + "] [" + ph.getUUID() + "]");
-                        }
+                        System.out.print(ph);
                     }
                     break;
                 case 2:

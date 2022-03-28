@@ -113,15 +113,18 @@ public class ParseCommands {
                 }
             }
         }
-        /*if (msg.contains("lvcreate")) {
-            String lvName = msg.split(" ")[1];
-            String lvSize = msg.split(" ")[2];
-            String vgName = msg.split(" ")[3];
-        }*/
+
         if (msg.contains("vglist")) {
             LocalHDStorage.displayVolumes(2);
         }
+        if (msg.contains("lvcreate")) {
+                    String lvName = msg.split(" ")[1];
+                    String lvSize = msg.split(" ")[2];
+                    String vgName = msg.split(" ")[3];
 
+
+
+                }
     }
 
 }

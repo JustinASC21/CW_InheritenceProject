@@ -26,4 +26,13 @@ public class PhysicalVolume extends Volumes {
     public VolumeGroup getBigVolume() {
         return bigVolume;
     }
+
+    @Override
+    public String toString() {
+        if (isOccupied()) {
+            return getName() + ": [" + getHd().getSize() + "] [" + getBigVolume().getName() + "] [" + getUUID() + "]";
+        } else {
+            return getName() + ": [" + getHd().getSize() + "] [" + getUUID() + "]";
+        }
+    }
 }

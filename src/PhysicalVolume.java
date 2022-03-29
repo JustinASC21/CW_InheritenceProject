@@ -30,9 +30,9 @@ public class PhysicalVolume extends Volumes {
     @Override
     public String toString() {
         if (isOccupied()) {
-            return getName() + ": [" + getHd().getSize() + "] [" + getBigVolume().getName() + "] [" + getUUID() + "]";
+            return super.toString() + " [" + getBigVolume().getName() + "] [" + getUUID() + "]";
         } else {
-            return getName() + ": [" + getHd().getSize() + "] [" + getUUID() + "]";
+            return super.toString() + " [" + getUUID() + "]";
         }
     }
 }

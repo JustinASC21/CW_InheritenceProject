@@ -10,9 +10,6 @@ public class Volumes {
         this.size = size;
     }
 
-    public void addSize(int amt) {this.size += amt;}
-
-
     public int getSize() {
         return size;
     }
@@ -25,4 +22,7 @@ public class Volumes {
         return name;
     }
 
+    public String toString() {
+        return this.name + ": [" + this.size + "G]";
+    }
 }

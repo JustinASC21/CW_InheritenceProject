@@ -6,6 +6,12 @@ public class LogicalVolume extends Volumes {
         this.superVG = vg;
     }
 
-    public toString()
+    public VolumeGroup getSuperVG() {
+        return superVG;
+    }
+
+    public String toString() {
+        return super.toString() + " [" + superVG.getName() + "] [" + this.getUUID() + "]";
+    }
 
 }

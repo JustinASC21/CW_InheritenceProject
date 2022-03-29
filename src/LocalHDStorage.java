@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class LocalHDStorage {
     public static ArrayList<HardDrive> localHD = new ArrayList<HardDrive>();
     public static ArrayList<Volumes> externalVolumes = new ArrayList<Volumes>();
@@ -39,31 +40,25 @@ public class LocalHDStorage {
             switch (volumeType) {
                 case 1:
                     if (obj instanceof PhysicalVolume) {
-                        PhysicalVolume ph = (PhysicalVolume) obj;
-                        System.out.print(ph);
+                        PhysicalVolume ph = (PhysicalhasVolume) obj;
+                        System.out.println(ph);
                     }
                     break;
                 case 2:
                     if (obj instanceof VolumeGroup) {
                         VolumeGroup vg = (VolumeGroup) obj;
-                        System.out.println(vg.getName() + ": total: [" + vg.getTotalSpace() + "G] available: [" + vg.getAvailableSpace() + "G] " + vg.PVListAsString() + " [" +vg.getUUID() + "]");
+                        System.out.println(vg);
                     }
                     break;
                 case 3:
+                    if (obj instanceof LogicalVolume) {
+                        LogicalVolume lv = (LogicalVolume) obj;
+                        System.out.println(lv);
+                    }
             }
 
 
         }
     }
 
-//    public static void addVolumeGroup(VolumeGroup vg) {
-//        localVolumeGroups.add(vg);
-//    }
-//    public static void displayVolumeGroups() {
-//        for (int i = 0; i < localVolumeGroups.size(); i++) {
-//            VolumeGroup vol = localPhysicalVolumes.get(i);
-//            System.out.println(vol.getName() + ": total: [" + vol.returnTotalSize() + "] available")
-//        }
-//
-//        }
     }

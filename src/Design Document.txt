@@ -1,0 +1,78 @@
+<HardDrive>
+    -String name
+    -String size
+    -boolean occupied
+        >Constructor - takes in a name and a size as Strings and sets the instance variables up
+        >setOccupied() - sets boolean occupied to true
+        >getSizeAsInt() - returns the size as an integer
+        >getSize() - returns the instance string size variable
+        >isOccupied() - returns the boolean occupied variable
+        >getName() - returns the name
+        >toString() - overrides the Object method to display the name and size
+<PhysicalVolume extends Volumes>
+    -HardDrive hd
+    -boolean occupied
+    -VolumeGroup bigVolume
+        >Constructor - takes in name as string, HardDrive object, UUID as string, and the harddrive size as an int.  The super constructor is called to the Volumes superclass
+        >setOccupied(VolumeGroup vg) - takes in a VolumeGroup making the physical volume occupied for that volume group
+        >getHd() - returns the hard drive of the physical volume
+        >isOccupied() - returns boolean based on if the volume is occupied or not
+        >getBigVolume() - returns the VolumeGroup if part of one
+        >toString() - returns the string representation of a physical volume which will vary depending on the occupied status
+        (name: [hdSize] [vgName] [UUID])
+        (name: [hdSize] [UUID])
+<VolumeGroup extends Volumes>
+    - ArrayList of Physical Volumes
+    - ArrayList of LogicalVolumes
+        >Constructor - takes in a string for name, uuid, a physicalVolume object and the Physical volume size)
+        >getTotalSpace() - returns the total space which is the size of all the physical volumes added together
+        >getAvailableSpace() - returns the available space which is obtained by subtracting the space taken by Logical Volumes and the total space
+        >PVListAsString() - returns a string representation of all physical volumes included in the array
+        >addPVList(PhysicalVolume pv) - adds pv to the Physical Volume list
+        >addLVList(LogicalVolume lv) - adds lv to the Logical Volume to the list
+        >toString() returns the Volume group informatiosn in this format
+        (name: total: [size] available: [available] [pv list] [uuid])
+<LogicalVolume extends Volumes>
+    -VolumeGroup superVG - the volumegroup that the logical volume is a part of
+        >Constructor - takes in a name, uuid as string and the VolumeGroup as vg, the constructor uses the super call to the Volumes superclass
+        >toString() - returns the string representation of this logical volume object as
+        (name: [size] [vgName] [uuid])
+<Volumes (SuperClass)>
+    -String UUID
+    -String name
+    -int size
+        >Constructor - takes in the name, the uuid and the integer size provided as parameters.
+        >getSize() - returns the integer variable size
+        >getUUID() - returns the string UUID that was provided to the object
+        >getName() - getter method for the String instance variable name
+        >toString() - returns the name of the object plus the size in this format
+        (name: [size G])
+<ParseCommands>
+    >static void parseMessage(String msg) - this method will take the msg string that is passed as a parameter and it
+    will process the msg thru a series of if statements checking which command it falls under. Then the conditions are met with either a true or false which would run different pieces of code
+    The try and catch statement will prevent the program from crashing if the data is not presented in the specific order that is required
+<LocalHDStorage>
+    - ArrayList of HardDrive localHd
+    - ArrayList of Volumes externalVolumes
+        >addDrive(HardDrive hd) - appends a localhd to the arraylist to store the drive and keep it ard when needed
+        >hasHd(String name) - will return a hard drive object if the object is found and null if it is not, requirements to find the drive is based on the name
+        >hasObject(String name) - similar to the hasHd method except this would work for objects that share a common super class like the Volumes class, and this will return a Volumes object which can then be typecasted into other subclasses
+        >displayDrives() - displays the hard drives by iterating through the arraylist of local hardrives
+        >addVolumes(Volume volume) - appends the Volumes object to the arrayList of externalVolumes
+        >displayVolumes(int volumeType) - will display either the physical volumes from the arraylist, the volume groups from the arraylist or the logical volumes, all depending on the number that is provided
+        (uses a switch case block to change the functionality of the method when given different values for the parameter)
+<Main>
+    -imports the Scanner class
+    - while loop to keep the program running except when the user types in "exit"
+    - if the user were to enter exit, the program will stop and present the last goodbye print statement
+    1. print out cmd template for aesthetic reasons
+    2. allow input from the user
+    3. check that input as a variable is not the string "exit"
+    4. if not use the static class ParseCommands to parse the message with the input
+    5. after that is parsed and its methods are run, print out again the cmd template
+    6. ask for input
+    7. repeat until the user types in "exit"
+    8. display goodbye message
+
+
+

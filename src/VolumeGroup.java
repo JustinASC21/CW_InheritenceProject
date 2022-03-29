@@ -19,9 +19,9 @@ public class VolumeGroup extends Volumes {
     public int getAvailableSpace() {
         int takenSpace = 0;
         for (LogicalVolume lv : lvList) {
-            takenSpace += lv
+            takenSpace += lv.getSize();
         }
-        return getTotalSpace();
+        return getTotalSpace() - takenSpace;
     }
     public String PVListAsString() {
         String res = "[";
@@ -33,23 +33,13 @@ public class VolumeGroup extends Volumes {
     }
     public void addPVList(PhysicalVolume pv) {
         phList.add(pv);
-        super.addSize(pv.getSize());
     }
     public void addLVList(LogicalVolume lv) {
         lvList.add(lv);
     }
 
     public String toString() {
-        return getName() + ": total: [" + getTotalSpace() + "G] available: [" + vg.getAvailableSpace() + "G] " + vg.PVListAsString() + " [" +vg.getUUID() + "]");
+        return getName() + ": total: [" + getTotalSpace() + "G] available: [" + getAvailableSpace() + "G] " + PVListAsString() + " [" +getUUID() + "]";
 
     }
-
-//    public String returnTotalSize() {
-//        int total = 0;
-//        for (int i = 0; i < phList.size(); i ++){
-//            total += phList.get(i).getHd().getSizeAsInt();
-//        }
-//        return total + "G";
-//    }
-
 }

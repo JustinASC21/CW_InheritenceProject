@@ -40,7 +40,7 @@ public class LocalHDStorage {
             switch (volumeType) {
                 case 1:
                     if (obj instanceof PhysicalVolume) {
-                        PhysicalVolume ph = (PhysicalhasVolume) obj;
+                        PhysicalVolume ph = (PhysicalVolume) obj;
                         System.out.println(ph);
                     }
                     break;

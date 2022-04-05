@@ -62,10 +62,10 @@ public class ParseCommands {
                     System.out.println("Drive successfully created!");
                 }
             }
-            if (msg.contains("list-drives")) {
+            else if (msg.contains("list-drives")) {
                 LocalHDStorage.displayDrives();
             }
-            if (msg.contains("pvcreate")) {
+            else if (msg.contains("pvcreate")) {
                 String pvName = msg.split(" ")[1];
                 String driveName = msg.split(" ")[2];
                 if (LocalHDStorage.hasHD(driveName) == null || LocalHDStorage.hasHD(driveName).isOccupied()) {
@@ -87,10 +87,10 @@ public class ParseCommands {
 
                 }
             }
-            if (msg.contains("pvlist")) {
+            else if (msg.contains("pvlist")) {
                 LocalHDStorage.displayVolumes(1);
             }
-            if (msg.contains("vgcreate")) {
+            else if (msg.contains("vgcreate")) {
                 String vgName = msg.split(" ")[1];
                 String pvName = msg.split(" ")[2];
                 if (LocalHDStorage.hasObject(pvName) instanceof PhysicalVolume) {
@@ -113,7 +113,7 @@ public class ParseCommands {
 
 
             }
-            if (msg.contains("vgextend")) {
+            else if (msg.contains("vgextend")) {
                 String vgName = msg.split(" ")[1];
                 String pvName = msg.split(" ")[2];
                 if (LocalHDStorage.hasObject(pvName) instanceof PhysicalVolume) {
@@ -135,10 +135,10 @@ public class ParseCommands {
                 }
             }
 
-            if (msg.contains("vglist")) {
+            else if (msg.contains("vglist")) {
                 LocalHDStorage.displayVolumes(2);
             }
-            if (msg.contains("lvcreate")) {
+            else if (msg.contains("lvcreate")) {
                 String lvName = msg.split(" ")[1];
                 String lvSize = msg.split(" ")[2];
                 String vgName = msg.split(" ")[3];
@@ -172,9 +172,10 @@ public class ParseCommands {
 
 
             }
-            if (msg.contains("lvlist")) {
+            else if (msg.contains("lvlist")) {
                 LocalHDStorage.displayVolumes(3);
             }
+            else
             System.out.println("Not a command!");
         }
         catch (Exception IndexOutOfBoundsException) {

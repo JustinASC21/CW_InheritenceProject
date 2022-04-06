@@ -18,6 +18,10 @@ public class Volumes {
         return UUID;
     }
 
+    public void setUUID(String newUUID) {
+        UUID = newUUID;
+    }
+
     public String getName() {
         return name;
     }

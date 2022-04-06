@@ -8,6 +8,11 @@ public class HardDrive {
         this.size = size;
         this.occupied = false;
     }
+    public HardDrive(String name, String size,boolean isOccu) {
+        this.name = name;
+        this.size = size;
+        this.occupied = isOccu;
+    }
 
     public void setOccupied() {
         this.occupied = true;
